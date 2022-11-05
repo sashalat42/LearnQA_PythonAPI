@@ -111,7 +111,7 @@ class TestUserEdit(BaseCase):
 
         Assertions.assert_code_status(response3, 400)
         assert response3.content.decode("utf-8") == f"Please, do not edit test users with ID 1, 2, 3, 4 or 5.", \
-            f"Unexpected response content {response2.content}"
+            f"Unexpected response content {response3.content}"
 
 # изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
     def test_edit_user_wrong_email(self):
