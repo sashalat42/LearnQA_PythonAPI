@@ -1,9 +1,16 @@
+import allure
+
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
 
+@allure.epic("Edit user cases")
 class TestUserEdit(BaseCase):
+    @allure.feature("Positive tests")
+    @allure.title("Edit data for just created user")
+    @allure.description("This test checks if we can edit data by authorized user")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_edit_just_created_user(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -55,6 +62,10 @@ class TestUserEdit(BaseCase):
         )
 
 # изменить данные пользователя, будучи неавторизованными
+    @allure.feature("Negative tests")
+    @allure.title("Edit data by unauthorized user")
+    @allure.description("This test checks if we can edit data by unauthorized user")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_edit_user_not_auth(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -78,6 +89,10 @@ class TestUserEdit(BaseCase):
             f"Unexpected response content {response2.content}"
 
 # изменить данные пользователя, будучи авторизованными другим пользователем
+    @allure.feature("Negative tests")
+    @allure.title("Edit user data by another authorized user")
+    @allure.description("This test checks if we can edit one user's data by another authorized user")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_edit_user_with_other_user_auth(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -114,6 +129,10 @@ class TestUserEdit(BaseCase):
             f"Unexpected response content {response3.content}"
 
 # изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
+    @allure.feature("Negative tests")
+    @allure.title("Edit email to email w/o @")
+    @allure.description("This test validates email input when editing data")
+    @allure.severity(allure.severity_level.MINOR)
     def test_edit_user_wrong_email(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -152,6 +171,10 @@ class TestUserEdit(BaseCase):
             f"Unexpected response content {response3.content}"
 
 # изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
+    @allure.feature("Negative tests")
+    @allure.title("Edit first name to a very short value")
+    @allure.description("This test validates first name input when editing data")
+    @allure.severity(allure.severity_level.MINOR)
     def test_edit_user_short_first_name(self):
         # REGISTER
         register_data = self.prepare_registration_data()

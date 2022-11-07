@@ -1,9 +1,16 @@
+import allure
+
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
 
 
+@allure.epic("Delete user cases")
 class TestUserDelete(BaseCase):
+    @allure.feature("Negative tests")
+    @allure.title("Delete by unauthorized user")
+    @allure.description("This test checks if we can delete data by unauthorized user")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_delete_user_not_auth(self):
         response = MyRequests.delete("/user/2")
 
@@ -11,6 +18,10 @@ class TestUserDelete(BaseCase):
         assert response.content.decode("utf-8") == f"Auth token not supplied", \
             f"Unexpected response content {response.content}"
 
+    @allure.feature("Positive tests")
+    @allure.title("Delete by authorized user")
+    @allure.description("In this test we create, login and delete user, and check that the user is deleted")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_delete_user_successfully(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -54,6 +65,10 @@ class TestUserDelete(BaseCase):
         assert response4.content.decode("utf-8") == f"User not found", \
             f"Unexpected response content {response4.content}"
 
+    @allure.feature("Negative tests")
+    @allure.title("Delete user by another user")
+    @allure.description("This test checks if user can be deleted by another authorized user")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_delete_user_with_other_user_auth(self):
         # REGISTER
         register_data = self.prepare_registration_data()
